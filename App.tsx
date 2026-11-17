@@ -1,20 +1,30 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import 'react-native-gesture-handler';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { PaperProvider } from 'react-native-paper';
+import HomeScreen from './screens/HomeScreen';
+import SecondScreen from './screens/SecondScreen';
+import CustomAppBar from './components/CustomAppBar';
+
+//stack navigatorin luonti
+const Stack = createStackNavigator();
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <PaperProvider>
+      {/* sovelluksen navigaatio */}
+      <NavigationContainer>
+        <Stack.Navigator
+          screenOptions={{
+            //oma komponentti sovelluksen yläreunan navigointipalkiksi  
+            header: (props) => <CustomAppBar {...props} />,
+          }}
+        >
+          {/*eka näyttö aloitusnäyttö */}
+          <Stack.Screen name="Home" component={HomeScreen} />
+          <Stack.Screen name="Second" component={SecondScreen} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </PaperProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
